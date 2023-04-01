@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Text File Reader/Writer</title>
+  </head>
+  <body>
+    <h1>Text File Reader/Writer</h1>
+
+    <form>
+      <h2>Read from file</h2>
+      <label for="filename">Enter filename:</label>
+      <input type="text" id="filename" name="filename"><br><br>
+      <input type="submit" value="Read" onclick="readFile()">
+    </form>
+
+    <form>
+      <h2>Write to file</h2>
+      <label for="filename">Enter filename:</label>
+      <input type="text" id="filename" name="filename"><br><br>
+      <label for="content">Enter content:</label>
+      <textarea id="content" name="content" rows="5" cols="50"></textarea><br><br>
+      <input type="submit" value="Write" onclick="writeFile()">
+    </form>
+
+    <script>
+      function readFile() {
+        var filename = document.getElementById("filename").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("content").innerHTML = this.responseText;
+          }
+        };
+        xhttp.open("GET", filename, true);
+        xhttp.send();
+      }
+
+      function writeFile() {
+        var filename = document.getElementById("filename").value;
+        var content = document.getElementById("content").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", filename, true);
+        xhttp.setRequestHeader("Content-type", "text/plain");
+        xhttp.send(content);
+      }
+    </script>
+  </body>
+</html>
